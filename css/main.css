@@ -1,185 +1,68 @@
-*,
-*::after,
-*::before {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+*, *::after, *::before {
+    padding: 0; margin: 0; box-sizing: border-box;
 }
 
 :root {
-  --dark-color: #000;
-  --flower-yellow: #fddd25;
-  --flower-orange: #ff9800;
-  --flower-center: #3e2723;
-  --leaf-green: #159faa;
-  --stem-green: #14757a;
+    --dark-color: #000;
+    --flower-yellow: #fddd25;
 }
 
 body {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: var(--dark-color);
-  overflow: hidden;
-  perspective: 1000px;
+    display: flex; align-items: flex-end; justify-content: center;
+    min-height: 100vh; background-color: var(--dark-color);
+    overflow: hidden; perspective: 1000px;
 }
 
-/* --- Texto de Cabecera --- */
+.night {
+    position: absolute; width: 100%; height: 100%;
+    background-image: radial-gradient(ellipse at top, #001d20 0%, #000 70%);
+    z-index: -1;
+}
+
 .header-text {
-  position: absolute;
-  top: 10%;
-  width: 100%;
-  text-align: center;
-  z-index: 100;
-  padding: 0 20px;
+    position: absolute; top: 15%; width: 100%; text-align: center;
+    z-index: 100; color: white; font-family: sans-serif;
 }
 
 .titulo {
-  font-family: "Arial Narrow", Arial, sans-serif;
-  color: var(--flower-yellow);
-  font-weight: bold;
-  letter-spacing: 4px;
-  font-size: 2rem;
-  text-shadow: 0 0 10px rgba(253, 221, 37, 0.5);
-  margin-bottom: 10px;
-  animation: fadeIn 3s ease-in-out forwards;
+    color: var(--flower-yellow); font-size: 1.8rem; margin-bottom: 10px;
+    animation: fadeIn 3s ease-in-out;
 }
 
-.subtitulo {
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 1.1rem;
-  opacity: 0.8;
-  animation: fadeIn 4s ease-in-out forwards;
-}
+.flowers { position: relative; transform: scale(0.9); }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.flower { position: absolute; bottom: 10vmin; transform-origin: bottom center; }
+.flower--1 { left: -15vmin; animation: moving-flower 4s infinite; }
+.flower--2 { left: 0; transform: scale(1.1); }
+.flower--3 { left: 15vmin; transform: rotate(-5deg); }
 
-/* --- Fondo de Noche --- */
-.night {
-  z-index: -1;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: radial-gradient(ellipse at top, #001d20 0%, var(--dark-color) 70%);
-}
-
-/* --- Flores Estilizadas --- */
-.flowers {
-  position: relative;
-  transform: scale(0.9);
-  display: flex;
-  justify-content: center;
-}
-
-.flower {
-  position: absolute;
-  bottom: 10vmin;
-  transform-origin: bottom center;
-  z-index: 10;
-  --fl-speed: 0.8s;
-}
-
-/* Diferentes alturas y animaciones para cada flor */
-.flower--1 { left: -15vmin; animation: moving-flower-1 4s linear infinite; }
-.flower--2 { left: 0; transform: rotate(5deg); animation: moving-flower-2 4s linear infinite; }
-.flower--3 { left: 15vmin; transform: rotate(-5deg); animation: moving-flower-3 4s linear infinite; }
-
-/* Tallo */
 .flower__line {
-  height: 65vmin;
-  width: 1.5vmin;
-  background-image: linear-gradient(to top, transparent 10%, var(--stem-green), #39c6d6);
-  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
-  animation: grow-flower-tree 4s backwards;
+    height: 60vmin; width: 1.5vmin;
+    background-image: linear-gradient(to top, #14757a, #39c6d6);
+    box-shadow: 0 0 10px rgba(0,255,255,0.2);
 }
 
-/* Pétalos Mejorados */
 .flower__leaf {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 9vmin;
-  height: 12vmin;
-  border-radius: 51% 49% 47% 53%/44% 45% 55% 69%;
-  background-color: var(--flower-yellow);
-  background-image: linear-gradient(to top, var(--flower-orange), var(--flower-yellow));
-  transform-origin: bottom center;
-  opacity: 1;
-  filter: drop-shadow(0 0 2vmin rgba(253, 221, 37, 0.6));
-  box-shadow: inset 0 0 2vmin rgba(255, 255, 255, 0.3);
+    position: absolute; bottom: 0; left: 50%;
+    width: 9vmin; height: 12vmin;
+    background: linear-gradient(to top, #ff9800, var(--flower-yellow));
+    border-radius: 50% 50% 20% 20%;
+    transform-origin: bottom center;
+    filter: drop-shadow(0 0 15px rgba(253, 221, 37, 0.7));
 }
 
-/* Centro de la flor (Estilo Girasol) */
+.flower__leaf--1 { transform: translate(-10%, 1%) rotateY(40deg) rotateX(-50deg); }
+.flower__leaf--2 { transform: translate(-50%, -4%) rotateX(40deg); }
+.flower__leaf--3 { transform: translate(-90%, 0%) rotateY(45deg) rotateX(50deg); }
+
 .flower__white-circle {
-  position: absolute;
-  left: -4vmin;
-  top: -3.5vmin;
-  width: 9vmin;
-  height: 5vmin;
-  border-radius: 50%;
-  background-color: var(--flower-center);
-  background-image: radial-gradient(circle, #5d4037 20%, #2b1d1a 100%);
-  z-index: 2;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    position: absolute; left: -4vmin; top: -3.5vmin;
+    width: 8vmin; height: 4vmin; border-radius: 50%;
+    background: #3e2723; z-index: 2;
 }
 
-/* Hojas del tallo */
-.flower__line__leaf {
-  --w: 7vmin;
-  --h: calc(var(--w) + 2vmin);
-  position: absolute;
-  background-image: linear-gradient(to top, rgba(20, 117, 122, 0.8), #5ed639);
-  border-top-right-radius: var(--h);
-  border-bottom-left-radius: var(--h);
-}
-
-/* --- Luces y Destellos --- */
-.flower__light {
-  position: absolute;
-  bottom: 0vmin;
-  width: 1.5vmin;
-  height: 1.5vmin;
-  background-color: #fffb00;
-  border-radius: 50%;
-  filter: blur(0.5vmin);
-  box-shadow: 0 0 10px #fffb00, 0 0 20px #ffeb3b;
-  animation: light-ans 4s linear infinite backwards;
-}
-
-/* --- Animaciones --- */
-@keyframes moving-flower-1 {
-  0%, 100% { transform: rotate(3deg); }
-  50% { transform: rotate(-3deg); }
-}
-
-@keyframes moving-flower-2 {
-  0%, 100% { transform: rotate(5deg); }
-  50% { transform: rotate(-5deg); }
-}
-
-@keyframes moving-flower-3 {
-  0%, 100% { transform: rotate(-2deg); }
-  50% { transform: rotate(2deg); }
-}
-
-@keyframes grow-flower-tree {
-  0% { height: 0; }
-}
-
-@keyframes light-ans {
-  0% { transform: translateY(0) scale(1); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateY(-90vh) scale(0.5); opacity: 0; }
-}
-
-/* Adaptación para móviles */
-@media only screen and (max-width: 600px) {
-  .titulo { font-size: 1.2rem; letter-spacing: 2px; }
-  .flowers { transform: scale(0.7); margin-bottom: 20vh; }
-  .flower__line { height: 50vmin; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes moving-flower {
+    0%, 100% { transform: rotate(2deg); }
+    50% { transform: rotate(-2deg); }
 }
