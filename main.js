@@ -1,8 +1,6 @@
-// Sincronizar las letras con la canción
-var audio = document.querySelector("audio");
+var audio = document.getElementById("bgMusic");
 var lyrics = document.querySelector("#lyrics");
 
-// Array de objetos que contiene cada línea y su tiempo de aparición
 var lyricsData = [
   { text: "At the time", time: 15 },
   { text: "The whisper of birds", time: 18 },
@@ -30,22 +28,15 @@ var lyricsData = [
   { text: "Nice butterflies in my hands", time: 176 },
   { text: "Too much light for twilight", time: 183 },
   { text: "In the mood for the flowers", time: 188 },
-  { text: "Love.", time: 190 }, // Corregido: antes decía 140, lo puse en 190 para que siga el orden
+  { text: "Love.", time: 192 }
 ];
 
-// Animar las letras
 function updateLyrics() {
   var time = Math.floor(audio.currentTime);
-  var currentLine = lyricsData.find(
-    (line) => time >= line.time && time < line.time + 5
-  );
+  var currentLine = lyricsData.find(line => time >= line.time && time < line.time + 5);
 
   if (currentLine) {
-    // Calcula la opacidad
-    var fadeInDuration = 0.1; 
-    var opacity = Math.min(1, (time - currentLine.time) / fadeInDuration);
-
-    lyrics.style.opacity = opacity;
+    lyrics.style.opacity = 1;
     lyrics.innerHTML = currentLine.text;
   } else {
     lyrics.style.opacity = 0;
@@ -53,26 +44,19 @@ function updateLyrics() {
   }
 }
 
-// Ejecutar la actualización cada 100ms para mayor precisión
-setInterval(updateLyrics, 100);
+setInterval(updateLyrics, 500);
 
 // Función para el título
-function ocultarTitulo() {
+setTimeout(() => {
   var titulo = document.querySelector(".titulo");
   if (titulo) {
-    titulo.style.animation = "fadeOut 3s ease-in-out forwards";
-    setTimeout(function () {
-      titulo.style.display = "none";
-    }, 3000);
+    titulo.style.transition = "opacity 3s";
+    titulo.style.opacity = "0";
+    setTimeout(() => titulo.style.display = "none", 3000);
   }
-}
+}, 216000);
 
-// Llama a la función después de 216 segundos
-setTimeout(ocultarTitulo, 216000);
-
-// EXTRA: Intento de reproducción automática (algunos navegadores lo bloquean)
-window.onload = () => {
-    audio.play().catch(() => {
-        console.log("Esperando click del usuario para iniciar música...");
-    });
-};
+// Activar audio con el primer clic en la pantalla
+document.addEventListener('click', () => {
+    audio.play();
+}, { once: true });
