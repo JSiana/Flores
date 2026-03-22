@@ -1,6 +1,7 @@
 var audio = document.getElementById("bgMusic");
 var lyrics = document.querySelector("#lyrics");
 
+// 1. TUS LETRAS (Mantenemos tus tiempos originales)
 var lyricsData = [
   { text: "At the time", time: 15 },
   { text: "The whisper of birds", time: 18 },
@@ -31,6 +32,7 @@ var lyricsData = [
   { text: "Love.", time: 192 }
 ];
 
+// 2. LÓGICA DE LAS LETRAS
 function updateLyrics() {
   var time = Math.floor(audio.currentTime);
   var currentLine = lyricsData.find(line => time >= line.time && time < line.time + 5);
@@ -43,10 +45,46 @@ function updateLyrics() {
     lyrics.innerHTML = "";
   }
 }
-
 setInterval(updateLyrics, 500);
 
-// Función para el título
+// 3. EFECTO DE GENERAR FLORES (Lo nuevo)
+function createFlower() {
+    const container = document.querySelector('.flowers'); // Buscamos el div del HTML
+    if (!container) return;
+
+    const flower = document.createElement('div');
+    flower.className = 'flower';
+    
+    // Posición aleatoria
+    const posX = Math.random() * 100; 
+    const size = 0.6 + Math.random() * 0.8; // Tamaños variados
+
+    flower.style.left = posX + 'vw';
+    flower.style.transform = 'scale(' + size + ')';
+
+    flower.innerHTML = `
+        <div class="flower__leafs">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+        </div>
+        <div class="flower__line"></div>
+    `;
+
+    container.appendChild(flower);
+
+    // Se eliminan después de 15 segundos para que no se trabe la página
+    setTimeout(() => {
+        flower.remove();
+    }, 15000); 
+}
+
+// Genera una flor nueva cada 800ms (puedes bajarlo si quieres más flores)
+setInterval(createFlower, 800);
+
+// 4. FUNCIONES DE INICIO Y TÍTULO
 setTimeout(() => {
   var titulo = document.querySelector(".titulo");
   if (titulo) {
@@ -56,7 +94,6 @@ setTimeout(() => {
   }
 }, 216000);
 
-// Activar audio con el primer clic en la pantalla
 document.addEventListener('click', () => {
     audio.play();
 }, { once: true });
