@@ -1,127 +1,58 @@
-*, *::after, *::before {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --dark-color: #000;
-    --yellow: #fddd25;
-    --orange: #ff9800;
-}
-
-body {
-    display: flex;
+/* --- Estructura de las Flores (MODIFICADO) --- */
+.flowers { 
+    position: relative; 
+    width: 100vw; 
+    height: 100vh; 
+    display: flex; 
+    justify-content: center; 
     align-items: flex-end;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: var(--dark-color);
-    overflow: hidden;
-    perspective: 1000px;
+    overflow: hidden; /* Importante para que no salgan barras de scroll */
 }
-
-/* Fondo Estrellado */
-.night {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(ellipse at top, #001d20 0%, #000 70%);
-    z-index: -1;
-}
-
-.stars {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0));
-    background-repeat: repeat;
-    background-size: 200px 200px;
-    opacity: 0.3;
-}
-
-/* Letras de la canción corregidas */
-#lyrics {
-    position: absolute;
-    bottom: 25%;
-    width: 100%;
-    text-align: center;
-    color: white;
-    font-family: 'Arial Narrow', sans-serif;
-    font-size: 2rem;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(0,0,0,1);
-    z-index: 100;
-    transition: opacity 0.5s ease;
-    letter-spacing: 2px;
-}
-
-.header-text {
-    position: absolute;
-    top: 10%;
-    width: 100%;
-    text-align: center;
-    color: var(--yellow);
-    z-index: 10;
-    padding: 0 20px;
-}
-
-.titulo { font-size: 1.5rem; margin-bottom: 10px; }
-.subtitulo { color: #fff; font-size: 1rem; opacity: 0.7; }
-
-/* --- Estructura de las Flores --- */
-.flowers { position: relative; transform: scale(0.9); }
 
 .flower {
     position: absolute;
-    bottom: 10vmin;
+    bottom: -10vh; /* Empiezan un poco abajo para que "crezcan" */
     transform-origin: bottom center;
+    /* Esta animación hará que aparezcan suavemente */
+    animation: aparecerFlor 3s ease-out forwards;
 }
 
-.flower--1 { left: -20vmin; }
-.flower--2 { left: 0; }
-.flower--3 { left: 20vmin; }
+/* Animación para que las flores nazcan desde el suelo */
+@keyframes aparecerFlor {
+    0% {
+        transform: translateY(100px) scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
 
+/* Balanceo infinito para que se muevan con el viento */
 .flower__line {
-    height: 60vmin;
-    width: 1.5vmin;
+    height: 50vmin; /* Altura un poco más variada */
+    width: 1.2vmin;
     background-image: linear-gradient(to top, #14757a, #39c6d6);
     box-shadow: 0 0 10px rgba(57, 198, 214, 0.3);
+    animation: swaying 4s ease-in-out infinite;
+    transform-origin: bottom;
 }
 
+@keyframes swaying {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+}
+
+/* Pétalos con brillo */
 .flower__leaf {
     position: absolute;
     bottom: 100%;
     left: 50%;
-    width: 10vmin;
-    height: 12vmin;
+    width: 8vmin;
+    height: 10vmin;
     background: linear-gradient(to top, var(--orange), var(--yellow));
     border-radius: 50% 50% 20% 20%;
     transform-origin: bottom center;
     filter: drop-shadow(0 0 15px rgba(253, 221, 37, 0.8));
-}
-
-/* Posicionamiento de pétalos para dar forma de flor */
-.flower__leaf--1 { transform: translate(-50%, 0) rotate(0deg); }
-.flower__leaf--2 { transform: translate(-50%, 0) rotate(90deg); }
-.flower__leaf--3 { transform: translate(-50%, 0) rotate(180deg); }
-.flower__leaf--4 { transform: translate(-50%, 0) rotate(270deg); }
-
-.flower__white-circle {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    transform: translate(-50%, -100%);
-    width: 6vmin;
-    height: 6vmin;
-    background: #3e2723;
-    border-radius: 50%;
-    z-index: 5;
-    border: 2px solid #2b1d1a;
-}
-
-@media (max-width: 600px) {
-    #lyrics { font-size: 1.2rem; bottom: 40%; }
-    .flowers { transform: scale(0.7); }
 }
