@@ -97,3 +97,50 @@ setTimeout(() => {
 document.addEventListener('click', () => {
     audio.play();
 }, { once: true });
+
+// Función para crear flores en posiciones aleatorias
+function crearFlorDecorativa() {
+    const contenedor = document.querySelector('.flowers');
+    if (!contenedor) return;
+
+    const flor = document.createElement('div');
+    flor.className = 'flower';
+    
+    // Posición horizontal aleatoria (0 a 100% de la pantalla)
+    const x = Math.random() * 100;
+    // Tamaño aleatorio (entre 0.5 y 1.2)
+    const escala = 0.5 + Math.random();
+    // Retraso aleatorio para que no salgan todas al mismo tiempo
+    const delay = Math.random() * 2;
+
+    flor.style.left = x + "vw";
+    flor.style.transform = "scale(" + escala + ")";
+    flor.style.animationDelay = delay + "s";
+
+    // El HTML de la flor (pétalos y tallo)
+    flor.innerHTML = `
+        <div class="flower__leafs">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+        </div>
+        <div class="flower__line"></div>
+    `;
+
+    contenedor.appendChild(flor);
+
+    // Opcional: Borrar la flor después de 20 segundos para que la página no se ponga lenta
+    setTimeout(() => {
+        flor.remove();
+    }, 20000);
+}
+
+// Crear 10 flores de golpe al cargar
+for(let i = 0; i < 10; i++) {
+    crearFlorDecorativa();
+}
+
+// Crear una flor nueva cada 1.5 segundos para que siempre aparezcan más
+setInterval(crearFlorDecorativa, 1500);
